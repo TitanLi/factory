@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Factory</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+    <script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+      .inputWidth{
+      width: 100px;
+    }
+     .margin-adjust {
+        margin-top: 5%;
+      }
+     @media (max-width:575px){
+       .margin-adjust {
+         margin-top: 10%;
+        }
+       .inputWidth{
+         width: 50px;
+       }
+      }
+     .textcolor{
+        color:#A54A55;
+      }
+     p{
+        color:#787575;
+      }
+   
+    </style>
+    <!-- <script src="chart.js"></script> -->
+    <script>
+       var selectStatus = "{{selectStatus}}";
+       console.log(selectStatus + ' is now Status');
+      //socket.io connect to server
+      var socket = io.connect('http://10.28.120.33:5500');
+      socket.on('DO3btn', function (msg) {
+      //if checkbox be checked msg = "on"
+      if (msg.data == "on"){
+        console.log('on');
+      //let D03's btn disable 
+          document.getElementById("DO3").disabled = true;
+          
+      }else{
+      console.log('off');
+          document.getElementById("DO3").disabled = false;
+      }
+      });
+      socket.on('DO2btn', function (msg) {
+      //if checkbox be checked msg = "on"
+      if (msg.data == "on"){
+        console.log('on');
+      //let D03's btn disable 
+          document.getElementById("DO2").disabled = true;
+      }else{
+      console.log('off');
+          document.getElementById("DO2").disabled = false;
+      }
+      });
+      //show Humidity control: 
+      socket.on('humiSetting', function (msg) {
+        $('#humiSetting').text(msg.data)
+      });
+      //show Temperature control:
+      socket.on('tempSetting', function (msg) {
+        $('#tempSetting').text(msg.data)
+      });
+      socket.on('isAuto', function (msg) {
+        $('#isAuto').text(msg.data)
+      });
+      //show output true/false:
+      socket.on('ET7044_DO1', function (msg) {
+        $('#ET7044_DO1').text(msg.data)
+      });
+      socket.on('ET7044_DO2', function (msg) {
+        $('#ET7044_DO2').text(msg.data)
+      });
+      socket.on('ET7044_DO3', function (msg) {
+        $('#ET7044_DO3').text(msg.data)
+      });
+      socket.on('ET7044_DO4', function (msg) {
+        $('#ET7044_DO4').text(msg.data)
+      });
+      socket.on('ET7044_DO5', function (msg) {
+        $('#ET7044_DO5').text(msg.data)
+      });
+      socket.on('ET7044_DO6', function (msg) {
+        $('#ET7044_DO6').text(msg.data)
+      });
+      socket.on('ET7044_DO7', function (msg) {
+        $('#ET7044_DO7').text(msg.data)
+      });
+       socket.on('ET7044_DO8', function (msg) {
+        $('#ET7044_DO8').text(msg.data)
+      });
+    </script>
+    <script>
+      function ajaxBtn(dataBtn){
+        $.ajax({
+          type:"POST",
+          url:"/",
+          dataType:"text",
+          data:{
+            dataBtn:dataBtn
+          }
+        });
+      }
+    </script>
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <ul class="nav nav-pills">
+          <li role="presentation"><a style="color:#736C6C" href="#DL303">DL-303 & ET7044</a></li>
+          <li role="presentation"><a style="color:#736C6C" href="/PM3133">PM-3133</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- chart.js  -->
+    <div class="container margin-adjust">
+
+      <div class="col-md-offset-1 margin-adjust">
+        <h1>DL-303</h1>
+        <p >CO2、Temperature and Humidity monitor</p>
+      </div>
+      <div class="row margin-top">
+        <div class="col-md-offset-1 col-md-10 col-sm-12">
+          <canvas id="DL303Chart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+    <div class="row margin-adjust">
+      <div class="col-md-offset-1 col-md-12 col-sm-12">
+        <h1>ET-7044</h1>
+        <P>Digital Output ( 01 - 08 ) controller ; <u>Click button to switch ON/OFF</u> </h5>
+        <form action="/isAuto" method="post">
+            Temperature :
+            <input type="text" name="tempSet" class="inputWidth"/>
+            Humidity :
+            <input type="text" name="humiSet" class="inputWidth"/>
+            <input type="checkbox" name="checkSelect" checked/> auto 
+            <button type="submit" class="btn btn-default">submit</button>
+            <p >Auto control</p>
+            <p style="display:inline"id= "isAuto" class="textcolor">---</p>
+            <p >Temperature control:</p>
+            <p style="display:inline" id= "tempSetting" class="textcolor">---</p>
+            <p >Humidity control:</p>
+            <p style="display:inline" id= "humiSetting" class="textcolor">---</p>
+        </form>
+      </div>
+      <!-- output -->
+      <div class="row col-md-12 col-lg-12 margin-adjust" style="margin-top:10px">
+        <!-- output1   -->
+        <div class="col-md-2 col-sm-10 col-xs-10 col-md-offset-1 col-lg-2">
+          <h5>OUTPUT 01</h5>
+          <h4 id= "ET7044_DO1" class="textcolor" >---</h4>
+          <input type="button" value="ON/OFF" class="btn btn-primary btn-block" onclick="ajaxBtn('DO1')" />
+        </div>
+        <!-- output2   -->
+        <div class="col-md-2 col-sm-10 col-xs-10 col-lg-2">
+          <h5>OUTPUT 02</h5>
+          <h4 id= "ET7044_DO2" class="textcolor">---</h4>
+          <input type="button" id="DO2" value="ON/OFF" class="btn btn-primary btn-block" onclick="ajaxBtn('DO2')" />
+        </div>
+        <!-- output3   -->
+        <div class="col-md-2 col-sm-10 col-xs-10 col-lg-2">
+          <h5>OUTPUT 03</h5>
+          <h4 id= "ET7044_DO3" class="textcolor">---</h4>
+          <input type="button" id="DO3" value="ON/OFF" class="btn btn-primary btn-block" onclick="ajaxBtn('DO3')" disabled='false' />
+        </div>
+        <!-- output4   -->
+        <div class="col-md-2 col-sm-10 col-xs-10 col-lg-2">
+          <h5>OUTPUT 04</h5>
+          <h4 id= "ET7044_DO4" class="textcolor">---</h4>
+          <input type="button" value="ON/OFF" class="btn btn-primary btn-block" onclick="ajaxBtn('DO4')" />
+        </div>
+        <!-- output5   -->
+        <div class="col-md-2 col-sm-10 col-xs-10 col-lg-2">
+          <h5>OUTPUT 05</h5>
+          <h4 id= "ET7044_DO5" class="textcolor">---</h4>
+          <input type="button" value="ON/OFF" class="btn btn-primary btn-block" onclick="ajaxBtn('DO5')" />
+        </div>
+        <!-- output6   -->
+         <div class="col-md-2 col-md-offset-1 col-sm-10 col-xs-10 col-lg-2 col-lg-offset-1">
+          <h5>OUTPUT 06</h5>
+          <h4 id= "ET7044_DO6" class="textcolor">---</h4>
+          <input type="button" value="ON/OFF" class="btn btn-primary btn-block" onclick="ajaxBtn('DO6')" />
+        </div>
+        <!-- output7   -->
+        <div class="col-md-2 col-sm-10 col-xs-10 col-lg-2">
+          <h5>OUTPUT 07</h5>
+          <h4 id= "ET7044_DO7" class="textcolor">---</h4>
+          <input type="button" value="ON/OFF" class="btn btn-primary btn-block" onclick="ajaxBtn('DO7')" />
+        </div>
+        <!-- output8   -->
+        <div class="col-md-2 col-sm-10 col-xs-10 col-lg-2">
+          <h5>OUTPUT 08</h5>
+          <h4 id= "ET7044_DO8" class="textcolor">---</h4>
+          <input type="button" value="ON/OFF" class="btn btn-primary btn-block" onclick="ajaxBtn('DO8')" />
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="container-fluid" style="margin-top:50px;background-color:#F8F8F8">
+       <div class="row">
+         <div class="col-md-offset-11 col-xs-offset-11 col-sm-offset-11 col-lg-offset-11">
+           <footer >
+             <p style="margin-top:15px">i.m.a.c iot</p>
+           </footer>
+         </div>
+      </div>
+    </div>
+    <script>
+      //get chart.js  var
+      var CO2 = [{{CO2}}];
+      var Temperature = [{{Temperature}}];
+      var Humidity = [{{Humidity}}];
+      var dl303num = [{{dl303num}}];
+      //chart 01
+      var ctx = document.getElementById('DL303Chart').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: dl303num,
+          datasets: [{
+              label: 'CO2 (ppm)',
+              data: CO2.reverse(),
+              fill: false,
+              backgroundColor: "rgba(206, 100, 100, 1)",
+              pointBackgroundColor: '#fff',
+              borderColor: "rgba(206, 100, 100, 1)",
+            }, {
+              label: 'Temperature (*C)',
+              data: Temperature.reverse(),
+              fill: false,
+              backgroundColor: "#648BD0",
+              pointBackgroundColor: '#fff',
+              borderColor: "#648BD0",
+            },
+            {
+              label: 'Humidity (%)',
+              data: Humidity.reverse(),
+              fill: false,
+              pointBackgroundColor: '#fff',
+              backgroundColor: "rgba(100,100,126,0.1)"
+            }
+          ]
+        }
+      });
+    </script>
+  </body>
+</html>
