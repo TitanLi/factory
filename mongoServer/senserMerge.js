@@ -29,7 +29,7 @@ var DL303_dewp;
 
 // ET7044 dev's var
 var ET7044_DOstatus;
-var auto_DOcontrol;
+var auto_DOcontrol = [false,false,false,false,false,false,false,false];
 
 //PM3133
 var PM3133_A_Json;
