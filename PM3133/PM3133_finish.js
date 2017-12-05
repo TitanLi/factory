@@ -11,7 +11,7 @@ var mqtt = require('mqtt');
 //var t=0;
 //var j=0;
 //var i=4352;
-var mqttClient  = mqtt.connect('mqtt://60.249.15.85');
+var mqttClient  = mqtt.connect('mqtt://192.168.8.100');
 mqttClient.on('connect',function(){
         console.log('connect to MQTT server');
         mqttClient.subscribe("PM3133/A");
@@ -39,7 +39,9 @@ client.connectRTU("COM1", {baudrate: 9600})
     .then(function() {
         console.log("Connected"); })
     .catch(function(e) {
-        console.log(e.message); });
+        console.log(e.message);
+        process.exit(1);
+    });
 }
 
 function setClient() {
@@ -160,5 +162,3 @@ function close() {
 //        //aclient.publish('PM3133/C',JSON.stringify({V_c:0,I_c:0,kW_c:0,kvar_c:0,kVA_c:0}));
 //});
 //});
-
- 
