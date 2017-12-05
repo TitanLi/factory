@@ -80,8 +80,12 @@ mqttClient.on('message', function (topic, message) {
             DL303_temp = message.toString();
             var collection = db.collection('isAutoCtrl');
             collection.find({}).limit(1).sort( { InsertTime: -1 } ).toArray(function (err, data) {
+              try {
                 checkSelect = data[0].checkSelect,
                 tempSetting = data[0].tempAutoSetting
+              } catch (e) {
+                checkSelect = "off";
+              }
             });
             if(checkSelect == 'on'){
                 if(tempSetting != ""){
