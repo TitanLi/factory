@@ -5,7 +5,7 @@ var mqtt = require('mqtt')
 var mqttClient = mqtt.connect();
 mqttClient.on('connect', function () {
     console.log('mqtt connect');
-    mqttClient.subscribe('DL303/#') 
+    mqttClient.subscribe('DL303/#')
     mqttClient.subscribe('ET7044/#')
     mqttClient.subscribe('PM3133/#')
 })
@@ -36,7 +36,7 @@ var PM3133_A_Json;
 var PM3133_B_Json;
 var PM3133_C_Json;
 
-//input post var 
+//input post var
 var checkSelect;
 var tempSetting;
 var humiSetting;
@@ -54,8 +54,12 @@ mqttClient.on('message', function (topic, message) {
             DL303_humi = message.toString();
             var collection = db.collection('isAutoCtrl');
             collection.find({}).limit(1).sort( { InsertTime: -1 } ).toArray(function (err, data) {
+              try {
                 checkSelect = data[0].checkSelect,
                 humiSetting = data[0].humiAutoSetting
+              } catch (e) {
+                checkSelect = "off";
+              }
             });
             if(checkSelect == 'on'){
                 if(tempSetting != ""){
@@ -63,13 +67,13 @@ mqttClient.on('message', function (topic, message) {
                         auto_DOcontrol[1] = true; // humi ctrl on
                         mqttClient.publish('ET7044/write',JSON.stringify(auto_DOcontrol));
                     }else{
-                        auto_DOcontrol[1] = false;            
+                        auto_DOcontrol[1] = false;
                         mqttClient.publish('ET7044/write',JSON.stringify(auto_DOcontrol));
                         }
                 }else(
                     console.log('HumiSetting = null')
                 )
-            }     
+            }
             //console.log('get DL303/TF message: %s', message)
             break;
         case 'DL303/TC':
@@ -77,7 +81,7 @@ mqttClient.on('message', function (topic, message) {
             var collection = db.collection('isAutoCtrl');
             collection.find({}).limit(1).sort( { InsertTime: -1 } ).toArray(function (err, data) {
                 checkSelect = data[0].checkSelect,
-                tempSetting = data[0].tempAutoSetting  
+                tempSetting = data[0].tempAutoSetting
             });
             if(checkSelect == 'on'){
                 if(tempSetting != ""){
@@ -85,20 +89,20 @@ mqttClient.on('message', function (topic, message) {
                         auto_DOcontrol[2] = true; //fan control = on
                         mqttClient.publish('ET7044/write',JSON.stringify(auto_DOcontrol));
                     }else{
-                        auto_DOcontrol[2] = false;            
+                        auto_DOcontrol[2] = false;
                         mqttClient.publish('ET7044/write',JSON.stringify(auto_DOcontrol));
                         }
                 }else(
                     console.log('tempSetting = null')
-                    
+
                 )
-            }     
+            }
             //console.log('get DL303/TF message: %s', message)
             break;
         case 'DL303/DC':
             DL303_dewp = message.toString();
-            //console.log('get DL303/DC message: %s', message) 
-            break;  
+            //console.log('get DL303/DC message: %s', message)
+            break;
         case 'ET7044/DOstatus':
             ET7044_DOstatus = message.toString();
             auto_DOcontrol = JSON.parse(message);
@@ -106,27 +110,27 @@ mqttClient.on('message', function (topic, message) {
         case 'PM3133/A':
             PM3133_A_Json = JSON.parse(message);
             //console.log('get PM3133/A message: %s', message)
-            break; 
+            break;
         case 'PM3133/B':
             PM3133_B_Json = JSON.parse(message);
             //console.log('get PM3133/B message: %s', message)
-            break; 
+            break;
         case 'PM3133/C':
             PM3133_C_Json = JSON.parse(message);
             //console.log('get PM3133/C message: %s', message)
-            break;      
-        
+            break;
+
     }
-    topic = ""; //目前topic歸零 
+    topic = ""; //目前topic歸零
     //判斷資料有收到 !=null
     if (DL303_co2!=null && DL303_humi!=null && DL303_temp!=null && DL303_dewp!=null  ){
-        insertDL303Data();  
+        insertDL303Data();
     }
     if (ET7044_DOstatus != null){
         insertET7044Data();
     }
     if (PM3133_A_Json!=null && PM3133_B_Json!=null && PM3133_C_Json!=null ){
-        insertPM3133Data();  
+        insertPM3133Data();
     }
 })
 
@@ -180,4 +184,3 @@ function insertPM3133Data() {
     PM3133_B_Json=null;
     PM3133_C_Json=null;
 };
-
