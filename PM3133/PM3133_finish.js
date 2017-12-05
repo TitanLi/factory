@@ -33,7 +33,7 @@ var i=4352;
 connect1();
 // open connection to a serial port
 function connect1(){
-client.connectRTU("COM1", {baudrate: 9600})
+client.connectRTU("/dev/ttyS0", {baudrate: 9600})
 //client.connectTCP("127.0.0.1", { port: 8502 })
     .then(setClient)
     .then(function() {
