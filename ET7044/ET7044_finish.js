@@ -28,7 +28,7 @@ function connect() {
 //    client.connectRTU("COM2", {
 //            baudrate: 9600
 //        })
-        client.connectTCP("10.21.0.2", { port: 502 })
+        client.connectTCP("192.168.8.162", { port: 502 })
         .then(setClient)
         .then(function () {
             console.log("Connected");
