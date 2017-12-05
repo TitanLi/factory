@@ -7,6 +7,7 @@ var chart = require('chart.js');
 var views = require('co-views');
 var mqtt = require('mqtt');
 var io = require('socket.io')(server);
+var serve = require('koa-static');
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var db;
@@ -252,13 +253,13 @@ router.post('/isAuto',function * (){
     selectStatus = isAutoSelect["checkSelect"];// inpu name = checkSelect tempSet
     tempSetting = isAutoSelect["tempSet"];//input name = tempSet
     humiSetting = isAutoSelect["humiSet"];//input name = humiSet
-    var date = new Date(); 
+    var date = new Date();
     selectInsertTime = date.getTime();
     var collection = db.collection('isAutoCtrl');
-    if(selectStatus != "on"){ 
+    if(selectStatus != "on"){
         selectStatus = "off"
     }
-    if(tempSetting != "" && humiSetting != ""){ 
+    if(tempSetting != "" && humiSetting != ""){
         collection.insert({
             checkSelect:selectStatus,
             tempAutoSetting:isAutoSelect["tempSet"],
@@ -273,10 +274,11 @@ router.post('/isAuto',function * (){
           InsertTime:selectInsertTime,
       })
     }
-    
+
     this.redirect('/');
 })
 app.use(bodyparser());
+app.use(serve('./../'));
 app.use(router.middleware());
 server.listen(5500, function () {
     console.log('listening on port 5500');

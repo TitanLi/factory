@@ -2,11 +2,21 @@
 <html>
   <head>
     <title>Factory</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
     <script src='https://code.jquery.com/jquery-3.1.1.min.js'></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+    <!-- 掛載chart.js -->
+    <script src="/node_modules/chart.js/dist/Chart.bundle.js"></script>
+    <script src="/node_modules/chart.js/dist/Chart.js"></script>
+    <!-- 掛載jquery -->
+    <script src="/webServer/jquery/jquery-3.2.1.min.js"></script>
+    <!-- 掛載CSS樣式 -->
+    <link rel="stylesheet" href="/webServer/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webServer/bootstrap/css/bootstrap-theme.min.css">
+    <!-- 掛載JS樣式 -->
+    <script src="/webServer/bootstrap/js/bootstrap.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -32,7 +42,7 @@
      p{
         color:#787575;
       }
-   
+
     </style>
     <!-- <script src="chart.js"></script> -->
     <script>
@@ -44,9 +54,9 @@
       //if checkbox be checked msg = "on"
       if (msg.data == "on"){
         console.log('on');
-      //let D03's btn disable 
+      //let D03's btn disable
           document.getElementById("DO3").disabled = true;
-          
+
       }else{
       console.log('off');
           document.getElementById("DO3").disabled = false;
@@ -56,14 +66,14 @@
       //if checkbox be checked msg = "on"
       if (msg.data == "on"){
         console.log('on');
-      //let D03's btn disable 
+      //let D03's btn disable
           document.getElementById("DO2").disabled = true;
       }else{
       console.log('off');
           document.getElementById("DO2").disabled = false;
       }
       });
-      //show Humidity control: 
+      //show Humidity control:
       socket.on('humiSetting', function (msg) {
         $('#humiSetting').text(msg.data)
       });
@@ -147,7 +157,7 @@
             <input type="text" name="tempSet" class="inputWidth"/>
             Humidity :
             <input type="text" name="humiSet" class="inputWidth"/>
-            <input type="checkbox" name="checkSelect" checked/> auto 
+            <input type="checkbox" name="checkSelect" checked/> auto
             <button type="submit" class="btn btn-default">submit</button>
             <p >Auto control</p>
             <p style="display:inline"id= "isAuto" class="textcolor">---</p>
