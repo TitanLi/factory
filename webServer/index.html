@@ -49,7 +49,7 @@
        var selectStatus = "{{selectStatus}}";
        console.log(selectStatus + ' is now Status');
       //socket.io connect to server
-      var socket = io.connect('http://10.28.120.33:5500');
+      var socket = io.connect('http://192.168.8.100:5500');
       socket.on('DO3btn', function (msg) {
       //if checkbox be checked msg = "on"
       if (msg.data == "on"){
