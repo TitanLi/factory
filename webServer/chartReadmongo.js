@@ -278,7 +278,7 @@ router.post('/isAuto',function * (){
     this.redirect('/');
 })
 app.use(bodyparser());
-app.use(serve('./../'));
+app.use(serve('./'));
 app.use(router.middleware());
 server.listen(5500, function () {
     console.log('listening on port 5500');
