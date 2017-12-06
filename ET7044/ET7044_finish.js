@@ -70,7 +70,7 @@ function run() {
 // connect and start logging
 connect();
 // Mqtt connecting and pub
-var mqttClient = mqtt.connect('mqtt://192.168.8.100:1883');
+var mqttClient = mqtt.connect('mqtt://192.168.8.101:1883');
 mqttClient.on('connect',function(){
     console.log('connect to MQTT server');
     mqttClient.subscribe('ET7044/write');

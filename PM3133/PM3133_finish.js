@@ -11,7 +11,7 @@ var mqtt = require('mqtt');
 //var t=0;
 //var j=0;
 //var i=4352;
-var mqttClient  = mqtt.connect('mqtt://192.168.8.100');
+var mqttClient  = mqtt.connect('mqtt://192.168.8.101');
 mqttClient.on('connect',function(){
         console.log('connect to MQTT server');
         mqttClient.subscribe("PM3133/A");
