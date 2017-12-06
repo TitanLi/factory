@@ -1,0 +1,22 @@
+{
+    "apps": [
+        {
+            "name": "ET7044",
+            "script": "./ET7044/ET7044_finish.js"
+        },
+        {
+            "name": "PM3133",
+            "script": "./PM3133/PM3133_finish.js"
+        },
+        {
+            "name": "mongoDB",
+            "script": "./mongoServer/senserMerge.js"
+        },
+        {
+            "name": "web",
+            "script": "./webServer/chartReadmongo.js",
+            "instances"  : 4,
+            "exec_mode"  : "cluster"
+        },
+    ]
+}
