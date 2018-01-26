@@ -1,4 +1,4 @@
-#Factory
+# Factory
 
 環境：
 
@@ -8,9 +8,7 @@
 
 設定檔修改：
 
-```
 /ET7044/config.json
-```
 
 ```js
 {
@@ -19,9 +17,7 @@
 }
 ```
 
-```
 /PM3133/config.json
-```
 
 ```js
 {
@@ -30,9 +26,7 @@
 }
 ```
 
-```
 /mongoServer/config.json
-```
 
 ```js
 {
