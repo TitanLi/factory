@@ -58,6 +58,9 @@ var data = {
 切換目錄
 $ cd /factory
 
+安裝套件
+$ npm install
+
 更改權限
 $ sudo chmod -777 /dev/ttyS0
 
