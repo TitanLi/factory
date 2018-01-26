@@ -6,6 +6,7 @@ var timeoutRunRef = null;
 var timeoutConnectRef = null;
 var networkErrors = ["ESOCKETTIMEDOUT", "ETIMEDOUT", "ECONNRESET", "ECONNREFUSED"];
 var writeData = [false,false,false,false,false,false,false,false];
+var config = require("./config.json");
 
 function checkError(e) {
     if (e.errno && networkErrors.includes(e.errno)) {
@@ -28,7 +29,8 @@ function connect() {
 //    client.connectRTU("COM2", {
 //            baudrate: 9600
 //        })
-        client.connectTCP("192.168.8.162", { port: 502 })
+        // client.connectTCP("192.168.8.162", { port: 502 })
+        client.connectTCP(config.ET7044, { port: 502 })
         .then(setClient)
         .then(function () {
             console.log("Connected");
@@ -70,7 +72,8 @@ function run() {
 // connect and start logging
 connect();
 // Mqtt connecting and pub
-var mqttClient = mqtt.connect('mqtt://192.168.8.101:1883');
+// var mqttClient = mqtt.connect('mqtt://192.168.8.101:1883');
+var mqttClient = mqtt.connect(config.MQTT);
 mqttClient.on('connect',function(){
     console.log('connect to MQTT server');
     mqttClient.subscribe('ET7044/write');

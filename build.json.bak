@@ -14,7 +14,9 @@
         },
         {
             "name": "web",
-            "script": "./webServer/chartReadmongo.js"
+            "script": "./webServer/chartReadmongo.js",
+            "instances"  : "max",
+            "exec_mode"  : "cluster"
         },
     ]
 }

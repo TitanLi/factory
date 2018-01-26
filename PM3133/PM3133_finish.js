@@ -3,6 +3,7 @@
 // create an empty modbus client
 var ModbusRTU = require("modbus-serial");
 var mqtt = require('mqtt');
+var config = require('./config.json');
 //var client = new ModbusRTU();
 //var ans=new Array();
 //var a=new Array();
@@ -11,7 +12,8 @@ var mqtt = require('mqtt');
 //var t=0;
 //var j=0;
 //var i=4352;
-var mqttClient  = mqtt.connect('mqtt://192.168.8.101');
+// var mqttClient  = mqtt.connect('mqtt://192.168.8.101');
+var mqttClient  = mqtt.connect(config.MQTT);
 mqttClient.on('connect',function(){
         console.log('connect to MQTT server');
         mqttClient.subscribe("PM3133/A");
@@ -33,7 +35,8 @@ var i=4352;
 connect1();
 // open connection to a serial port
 function connect1(){
-client.connectRTU("/dev/ttyS0", {baudrate: 9600})
+// client.connectRTU("/dev/ttyS0", {baudrate: 9600})
+client.connectRTU(config.PM3133, {baudrate: 9600})
 //client.connectTCP("127.0.0.1", { port: 8502 })
     .then(setClient)
     .then(function() {

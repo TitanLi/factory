@@ -1,0 +1,4 @@
+{
+  "MongoDB" : "mongodb://localhost:27017/Factory",
+  "MQTT" : "mqtt://127.0.0.1:1883"
+}

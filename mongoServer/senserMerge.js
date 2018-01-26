@@ -1,8 +1,10 @@
 
 //connect mqtt
-var mqtt = require('mqtt')
+var mqtt = require('mqtt');
+var config = require('./config.json');
 // var mqttClient = mqtt.connect('mqtt://60.249.15.85:1883')
-var mqttClient = mqtt.connect();
+// var mqttClient = mqtt.connect();
+var mqttClient = mqtt.connect(config.MQTT);
 mqttClient.on('connect', function () {
     console.log('mqtt connect');
     mqttClient.subscribe('DL303/#')
@@ -14,7 +16,13 @@ mqttClient.on('connect', function () {
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var db;
-MongoClient.connect("mongodb://localhost:27017/Factory", function (err, pDb) {
+// MongoClient.connect("mongodb://localhost:27017/Factory", function (err, pDb) {
+//     if (err) {
+//         return console.dir(err);
+//     }
+//     db = pDb;
+// });
+MongoClient.connect(config.MongoDB, function (err, pDb) {
     if (err) {
         return console.dir(err);
     }

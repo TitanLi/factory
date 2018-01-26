@@ -11,7 +11,14 @@ var serve = require('koa-static');
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
 var db;
-MongoClient.connect("mongodb://localhost:27017/Factory", function (err, pDb) {
+var config = require('./config/config.json')
+// MongoClient.connect("mongodb://localhost:27017/Factory", function (err, pDb) {
+//     if (err) {
+//         return console.dir(err);
+//     }
+//     db = pDb;
+// });
+MongoClient.connect(config.MongoDB, function (err, pDb) {
     if (err) {
         return console.dir(err);
     }
@@ -22,7 +29,8 @@ const logger = require('koa-logger');
 //mqtt
 //var client = mqtt.connect('mqtt://60.249.15.85:1883');
 //var client = mqtt.connect('mqtt://10.28.120.17');
-var client = mqtt.connect();
+// var client = mqtt.connect();
+var client = mqtt.connect(config.MQTT);
 client.on('connect', function () {
     console.log('connect to MQTT server');
     client.subscribe('ET7044/DOstatus');

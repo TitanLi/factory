@@ -21,6 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/webServer/config/config.js"></script>
     <style>
       .inputWidth{
       width: 100px;
@@ -49,7 +50,8 @@
        var selectStatus = "{{selectStatus}}";
        console.log(selectStatus + ' is now Status');
       //socket.io connect to server
-      var socket = io.connect('http://192.168.8.101:5500');
+      // var socket = io.connect('http://192.168.8.101:5500');
+      var socket = io.connect(data.socket_ip);
       socket.on('DO3btn', function (msg) {
       //if checkbox be checked msg = "on"
       if (msg.data == "on"){
