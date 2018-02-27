@@ -15,6 +15,6 @@
         {
             "name": "web",
             "script": "./webServer/chartReadmongo.js"
-        },
+        }
     ]
 }

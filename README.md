@@ -62,7 +62,7 @@ $ cd /factory
 $ npm install
 
 更改權限
-$ sudo chmod -777 /dev/ttyS0
+$ sudo chmod 777 /dev/ttyS0
 
 啟動服務
 $ npm start
