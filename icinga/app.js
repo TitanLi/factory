@@ -8,7 +8,7 @@ const router = new Router();
 const mqttClient = mqtt.connect(mqttConfig.MQTT);
 
 var DL303_co2="",DL303_humi="",DL303_temp="",DL303_dewp="";
-var ET7044_status="";
+var ET7044_status="[false,false,false,false,false,false,false,false]";
 var PM3133_A_Json="",PM3133_B_Json="",PM3133_C_Json="";
 
 mqttClient.on('connect', function () {
@@ -21,18 +21,19 @@ mqttClient.on('connect', function () {
 mqttClient.on('message', function (topic, message) {
     //console.log(topic);
     switch (topic) {
+        //co2
         case 'DL303/CO2':
             DL303_co2 = message.toString();
             break;
-        //溼度測量
+        //relative Humidity
         case 'DL303/RH':
             DL303_humi = message.toString();
             break;
-        //溫度測量
+        //temperature(°C)
         case 'DL303/TC':
             DL303_temp = message.toString();
             break;
-        //露點溫度
+        //dew point(°C)
         case 'DL303/DC':
             DL303_dewp = message.toString();
             break;
@@ -45,13 +46,13 @@ mqttClient.on('message', function (topic, message) {
             //  "kW_a": new Number(ans[2]).toFixed(3),
             //  "kvar_a": new Number(ans[3]).toFixed(3),
             //  "kVA_a": new Number(ans[4]).toFixed(3)}
-            PM3133_A_Json = message.toString();
+            PM3133_A_Json = JSON.parse(message);
             break;
         case 'PM3133/B':
-            PM3133_B_Json = message.toString();
+            PM3133_B_Json = JSON.parse(message);
             break;
         case 'PM3133/C':
-            PM3133_C_Json = message.toString();
+            PM3133_C_Json = JSON.parse(message);
             break;
 
     }
@@ -71,6 +72,7 @@ router.get('/',function * (){
   }
 });
 
+app.use(router.middleware());
 app.listen(3001,function(){
   console.log('listening port on 3001');
 });
