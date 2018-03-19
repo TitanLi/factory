@@ -7,9 +7,9 @@ const app = koa();
 const router = new Router();
 const mqttClient = mqtt.connect(mqttConfig.MQTT);
 
-var DL303_co2,DL303_humi,DL303_temp,DL303_dewp;
-var ET7044_status;
-var PM3133_A_Json,PM3133_B_Json,PM3133_C_Json;
+var DL303_co2="",DL303_humi="",DL303_temp="",DL303_dewp="";
+var ET7044_status="";
+var PM3133_A_Json="",PM3133_B_Json="",PM3133_C_Json="";
 
 mqttClient.on('connect', function () {
     console.log('mqtt connect');
