@@ -66,7 +66,7 @@ router.get('/',function * (){
     "DL303_dewp":DL303_dewp,
     "ET7044_status":ET7044_status,
     "PM3133_A_Json":PM3133_A_Json,
-    "PM3133_B_Json"PM3133_B_Json,
+    "PM3133_B_Json":PM3133_B_Json,
     "PM3133_C_Json":PM3133_C_Json
   }
 });
