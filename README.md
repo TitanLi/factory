@@ -6,9 +6,19 @@
 2. mongodb v2.6.10 +
 3. MQTT mosquitto
 
+DL303設定：</br>
+ip:10.21.0.161</br>
+password:Admin</br>
+
+ET7044設定：</br>
+ip:10.21.0.162</br>
+username:Admin</br>
+password:Admin</br>
+
 設定檔修改：
 
 /ET7044/config.json
+
 
 ```js
 {
