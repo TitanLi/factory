@@ -1,7 +1,7 @@
 
 //connect mqtt
 var mqtt = require('mqtt')
-var client = mqtt.connect('mqtt://10.28.120.17:1883')
+var client = mqtt.connect('mqtt://10.20.0.90:1883')
 
 client.on('connect', function () {
     console.log('connect');
@@ -28,7 +28,7 @@ MongoClient.connect("mongodb://localhost:27017/Factory", function (err, pDb) {
 var DL303_co2;
 var DL303_humi;
 var DL303_temp;
-var DL303_dewp; 
+var DL303_dewp;
 
 //mqtt client
 client.on('message', function (topic, message) {
@@ -48,15 +48,15 @@ client.on('message', function (topic, message) {
             break;
         case 'DL303/DC':
             DL303_dewp = message.toString();
-            console.log('get DL303/DC message: %s', message) 
-            break;    
+            console.log('get DL303/DC message: %s', message)
+            break;
     }
-    topic = ""; //目前topic歸零 
-    console.log('----------------------'); 
+    topic = ""; //目前topic歸零
+    console.log('----------------------');
     //判斷資料有收到 !=null
     if (DL303_co2!=null && DL303_humi!=null && DL303_temp!=null && DL303_dewp!=null  ){
-            insertData();  
-    }      
+            insertData();
+    }
 })
 
 client.on('error', function(err) {

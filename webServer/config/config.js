@@ -1,3 +1,3 @@
 var data = {
-  "socket_ip" : "http://192.168.8.101:5500"
+  "socket_ip" : "http://10.20.0.68:5500"
 };
