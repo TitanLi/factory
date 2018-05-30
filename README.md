@@ -7,11 +7,11 @@
 3. MQTT mosquitto
 
 DL303設定：</br>
-ip:192.168.0.161</br>
+ip:10.0.0.164</br>
 password:Admin</br>
 
 ET7044設定：</br>
-ip:192.168.0.162</br>
+ip:10.0.0.162</br>
 username:Admin</br>
 password:Admin</br>
 
